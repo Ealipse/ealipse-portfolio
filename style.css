@@ -133,6 +133,80 @@ body {
   color: #aaa;
 }
 
+
+
+/* TRUSTED BY */
+.trusted {
+  margin-top: 20px;
+}
+
+.trusted-logos {
+  display: flex;
+  gap: 32px;
+}
+
+.trusted-logos img {
+  height: 35px;
+  width: auto;
+}
+
+.trusted-logos {
+  opacity: 0.35;
+}
+
+.trusted-logos img {
+  filter: grayscale(100%);
+}
+
+.trusted-logos img:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+.trusted-logos {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+
+/* Dots + Positions*/
+.card-image {
+  position: relative;
+}
+
+.card-image img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* DOTS */
+.dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.dot.active {
+  background: var(--accent);
+  transform: scale(1.2);
+}
+
+
+
 /* BUTTON */
 .btn {
   display: inline-block;
@@ -280,6 +354,99 @@ body {
 .link {
   color: var(--accent);
 }
+/* CONTACT - Discord Copy */
+.copy-item {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.copy-item:hover {
+  color: var(--accent);
+}
+
+.copy-text {
+  opacity: 0.8;
+}
+
+/* gjør kun navnet interaktivt */
+.copy-text {
+  position: relative;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: 0.2s;
+}
+
+/* hover effekt */
+.copy-text:hover {
+  color: var(--accent);
+}
+
+/* ikon (skjult som default) */
+.copy-icon {
+  font-size: 12px;
+  opacity: 0;
+  transform: translateY(2px);
+  transition: 0.2s;
+}
+
+/* vis ikon på hover */
+.copy-text:hover .copy-icon {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* COPIED state */
+.copy-text.copied {
+  color: var(--accent);
+}
+
+/* glow animasjon */
+.copy-text.copied {
+  text-shadow:
+    0 0 6px rgba(255,122,0,0.8),
+    0 0 12px rgba(255,122,0,0.4);
+}
+
+
+/* TMX Link Copy */
+
+.copy-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: 0.2s;
+}
+
+/* hover */
+.copy-link:hover {
+  color: var(--accent);
+}
+
+/* ikon */
+.copy-link .copy-icon {
+  font-size: 12px;
+  opacity: 0;
+  transform: translateY(2px);
+  transition: 0.2s;
+}
+
+/* vis ikon på hover */
+.copy-link:hover .copy-icon {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* copied state */
+.copy-link.copied {
+  color: var(--accent);
+  text-shadow:
+    0 0 6px rgba(255,122,0,0.8),
+    0 0 12px rgba(255,122,0,0.4);
+}
+
 
 /* FOOTER */
 .footer {
@@ -363,12 +530,52 @@ body.modal-active::after {
 .card-footer {
   display: none;
   padding: 15px;
-  justify-content: space-between;
+  gap: 20px;
 }
 
 .card.active .card-footer {
   display: flex;
 }
+
+/* VENSTRE (info) */
+.footer-left {
+  flex: 2;
+  font-size: 12px;
+  color: #aaa;
+}
+
+.footer-left p {
+  margin: 2px 0;
+}
+
+/* HØYRE (knapper) */
+.footer-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.footer-right .btn {
+  width: 100%;
+  text-align: center;
+}
+
+.footer-left {
+  max-height: 100px;
+  overflow: hidden;
+}
+
+.card.active .dot {
+  width: 6px;
+  height: 6px;
+}
+
+.card-image img {
+  transition: opacity 0.2s ease;
+}
+
 
 /* DIM OTHER CARDS */
 .card.active ~ .card {

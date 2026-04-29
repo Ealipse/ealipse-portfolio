@@ -39,6 +39,18 @@
       </p>
 
     </section>
+    
+      <!-- TRUSTED BY -->
+    <section class="trusted container fade-section">
+      <p class="label">Trusted by</p>
+
+      <div class="trusted-logos">
+        <img src="images/logos/TMlogo.png">
+        <img src="images/logos/Nadeologo.png">
+        <img src="images/logos/Ubisoftlogo.png">
+     </div>
+    </section>
+
 
     <!-- MAPS -->
     <section class="section">
@@ -55,7 +67,6 @@
     <!-- ABOUT -->
     <div class="panel">
       <p class="label">About Me</p>
-      <h2>About Me</h2>
 
       <p>
         I'm Ealipse, a Trackmania mapper from Norway focused on creating visually stunning sceneries.
@@ -74,17 +85,23 @@
       <h2>Get in touch</h2>
 
       <div class="contact-item">
-        <span>Email</span>
-        <a href="mailto:Ealipse@gmail.com">Ealipse@gmail.com</a>
+        <span>Discord</span>
+        <span class="copy-text" onclick="copyDiscord(this)">
+           ealipse
+         <span class="copy-icon">📋</span>
+        </span>
       </div>
 
       <div class="contact-item">
-        <span>Discord</span>    <p>ealipse</p>
-      </div>
+         <span>Trackmania</span>
 
-      <div class="contact-item">
-        <span>Trackmania</span>
-        <a href="https://trackmania.exchange/usershow/41068" class="link">View Profile →</a>
+        <a href="https://trackmania.exchange/usershow/41068" 
+          class="link copy-link" 
+          onclick="copyLink(event, this)">
+     
+          View Profile →
+          <span class="copy-icon">📋</span>
+        </a>
       </div>
     </div>
 
