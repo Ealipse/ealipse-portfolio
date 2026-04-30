@@ -1,13 +1,16 @@
+const featuredContainer = document.querySelector(".featured");
 const grid = document.querySelector(".grid");
 
-maps.forEach(map => {
+const featuredMap = maps[0];
+const otherMaps = maps.slice(1);
 
+function createCard(map) {
   const videoBtn = (map.yt && map.yt.trim() !== "")
     ? `<a href="${map.yt}" target="_blank" class="btn">YouTube</a>`
     : "";
 
-  grid.innerHTML += `
-    <div class="card" onclick="expandCard(this)">
+  return `
+    <div class="card" data-id="${map.tm.split("/").pop()}" onclick="expandCard(this)">
       
       <div class="card-image">
         <img src="${map.images[0]}">
@@ -27,21 +30,20 @@ maps.forEach(map => {
       </div>
 
       <div class="card-footer">
-
         <div class="footer-left">
           ${map.info.map(line => `<p>${line}</p>`).join("")}
+          <p class="awards">Awards: ...</p>
         </div>
 
         <div class="footer-right">
           <a href="${map.tm}" target="_blank" class="btn">Play</a>
           ${videoBtn}
         </div>
-
       </div>
 
     </div>
   `;
-});
+}
 
 function changeImage(e, dot, index) {
   e.stopPropagation();
@@ -112,3 +114,72 @@ function copyLink(e, el) {
     el.classList.remove("copied");
   }, 1200);
 }
+
+if (featuredContainer && featuredMap) {
+  featuredContainer.innerHTML = createCard(featuredMap);
+}
+
+otherMaps.forEach(map => {
+  grid.innerHTML += createCard(map);
+});
+
+
+// Mobile Picture Swipe
+document.querySelectorAll(".card-image").forEach(container => {
+  let startX = 0;
+  let endX = 0;
+
+  container.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+  });
+
+  container.addEventListener("touchend", (e) => {
+    endX = e.changedTouches[0].clientX;
+
+    handleSwipe(container, startX, endX);
+  });
+});
+
+function handleSwipe(container, startX, endX) {
+  const threshold = 40;
+
+  const card = container.closest(".card");
+  const title = card.querySelector("h3").innerText;
+  const map = maps.find(m => m.name === title);
+
+  const img = container.querySelector("img");
+  const dots = container.querySelectorAll(".dot");
+
+  let currentIndex = [...dots].findIndex(d => d.classList.contains("active"));
+
+  if (startX - endX > threshold) {
+    // swipe left → next
+    currentIndex = (currentIndex + 1) % map.images.length;
+  } else if (endX - startX > threshold) {
+    // swipe right → prev
+    currentIndex = (currentIndex - 1 + map.images.length) % map.images.length;
+  } else {
+    return;
+  }
+
+  img.src = map.images[currentIndex];
+
+  dots.forEach(d => d.classList.remove("active"));
+  dots[currentIndex]?.classList.add("active");
+}
+
+const sidebar = document.querySelector(".sidebar");
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      document.body.classList.add("sidebar-visible");
+    } else {
+      document.body.classList.remove("sidebar-visible");
+    }
+  });
+}, {
+  threshold: 0.2
+});
+
+if (sidebar) observer.observe(sidebar);
