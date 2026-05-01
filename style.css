@@ -26,6 +26,7 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
+  min-height: 100vh;
 }
 
 a {
@@ -71,6 +72,13 @@ a {
   backdrop-filter: blur(10px);
 }
 
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
 .logo-wrap {
   display: flex;
   align-items: center;
@@ -84,6 +92,23 @@ a {
 .nav-text {
   font-family: 'Ethnocentric', sans-serif;
   letter-spacing: 2px;
+  color: var(--accent);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: #aaa;
+  font-size: 13px;
+}
+
+.nav-links a {
+  transition: color 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
   color: var(--accent);
 }
 
@@ -182,6 +207,100 @@ a {
   gap: 20px;
 }
 
+.section-heading {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.section-heading .label {
+  margin-bottom: 0;
+}
+
+.section-btn {
+  margin-top: 0;
+  margin-bottom: 4px;
+  white-space: nowrap;
+}
+
+.projects-layout {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 30px;
+  width: min(1600px, calc(100% - 40px));
+  margin: 40px auto;
+  flex: 1;
+}
+
+.projects-sidebar {
+  position: relative;
+}
+
+.filters-panel {
+  position: sticky;
+  top: 24px;
+}
+
+.projects-header h1 {
+  margin: 0 0 24px;
+  font-family: 'Ethnocentric', sans-serif;
+  font-size: 36px;
+}
+
+.projects-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.filter-control {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+  color: #aaa;
+  font-size: 12px;
+}
+
+.filter-control input,
+.filter-control select {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(255,122,0,0.18);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--text);
+  background: rgba(5,5,5,0.85);
+  outline: none;
+}
+
+.filter-control input:focus,
+.filter-control select:focus {
+  border-color: rgba(255,122,0,0.6);
+  box-shadow: 0 0 12px rgba(255,122,0,0.18);
+}
+
+.filter-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 18px;
+  color: #aaa;
+  font-size: 12px;
+}
+
+.filter-reset {
+  border: 1px solid rgba(255,122,0,0.35);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: var(--accent);
+  background: rgba(255,122,0,0.08);
+  cursor: pointer;
+}
+
+.filter-reset:hover {
+  background: rgba(255,122,0,0.16);
+}
+
 
 /* =========================
    CARD BASE
@@ -194,6 +313,7 @@ a {
   transition: 0.3s;
   border: 1px solid rgba(255,122,0,0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
 .card:hover {
@@ -225,8 +345,7 @@ a {
   width: 100%;
   transform: scale(1.02);
   border: 1px solid rgba(255,122,0,0.4);
-  box-shadow: 0 0 30px rgba(255,122,0,0.2);
-  transform: scale(1.02);  
+  box-shadow: 0 0 30px rgba(255,122,0,0.2); 
 }
 
 .featured .card img {
@@ -338,47 +457,108 @@ a {
 
 
 /* =========================
-   EXPANDED CARD
+   MAP SHEET
 ========================= */
 
-.card.active {
+.map-sheet {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(1.5);
-  width: 600px;
-  max-width: 90%;
+  top: 0;
+  right: 0;
   z-index: 1000;
-  box-shadow: 0 0 40px rgba(0,0,0,0.8), 0 0 30px rgba(255,122,0,0.4);
+  width: min(520px, 100%);
+  height: 100vh;
+  overflow-y: auto;
+  background: rgba(12,12,12,0.98);
+  border: 1px solid rgba(255,122,0,0.25);
+  border-right: 0;
+  border-radius: 12px 0 0 12px;
+  box-shadow: -20px 0 60px rgba(0,0,0,0.75), 0 0 35px rgba(255,122,0,0.18);
+  transform: translateX(calc(100% + 20px));
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.card.active .card-image img {
-  height: 350px;
+.map-sheet.active {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.card.active .card-info {
-  text-align: center;
-  transform: translateY(-5px);
-  margin: 6px 0 4px;
-}
-
-.card.active .card-info h3 {
-  font-size: 14px;
-  opacity: 0.7;
-}
-
-.card.active .card-footer {
-  display: flex;
-  padding: 15px;
+.sheet-inner {
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 20px;
+  padding: 24px;
 }
 
-.card.active:hover {
-  transform: translate(-50%, -50%) scale(1.55);
+.sheet-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(255,122,0,0.35);
+  border-radius: 50%;
+  color: var(--accent);
+  background: rgba(10,10,10,0.85);
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+}
 
-  box-shadow:
-    0 0 50px rgba(0,0,0,0.9),
-    0 0 40px rgba(255,122,0,0.5);
+.sheet-close:hover {
+  background: rgba(255,122,0,0.15);
+  box-shadow: 0 0 16px rgba(255,122,0,0.35);
+}
+
+.sheet-media {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #050505;
+  aspect-ratio: 4 / 3;
+}
+
+.sheet-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.sheet-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-width: 0;
+}
+
+.sheet-content h2 {
+  margin: 0 42px 18px 0;
+  font-size: 28px;
+}
+
+.sheet-info {
+  color: #bbb;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.sheet-info p {
+  margin: 0 0 8px;
+}
+
+.sheet-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.sheet-actions .btn {
+  margin-top: 0;
 }
 
 
@@ -469,7 +649,7 @@ a {
   position: absolute;
   left: -20px;
   top: 0;
-  bottom: 0;
+  bottom: 0; 
   width: 1px;
   transition: opacity 0.3s ease, transform 0.3s ease;
   transform: scaleY(0.8);
@@ -581,25 +761,6 @@ body.sidebar-visible .sidebar::before {
 
 
 /* =========================
-   OVERLAY
-========================= */
-
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.3s;
-}
-
-body.modal-active::after {
-  opacity: 1;
-}
-
-
-/* =========================
    FOOTER (PAGE)
 ========================= */
 
@@ -607,6 +768,11 @@ body.modal-active::after {
   margin-top: 60px;
   padding: 40px;
   background: rgba(10,10,10,0.95);
+  flex-shrink: 0;
+}
+
+.projects-page .footer {
+  margin-top: auto;
 }
 
 .footer-container {
@@ -640,24 +806,70 @@ body.modal-active::after {
   .layout {
     grid-template-columns: 1fr;
   }
+
+  .projects-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .filters-panel {
+    position: static;
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 768px) {
 
-  .card.active {
-    transform: translate(-50%, -50%) scale(1);
-    width: 95%;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-
-  .card.active .card-image img {
-    height: 200px;
-  }
-
-  .card.active .card-footer {
+  .nav-container {
+    align-items: flex-start;
     flex-direction: column;
-    align-items: stretch;
+  }
+
+  .projects-layout {
+    width: min(100% - 24px, 1600px);
+    margin: 24px auto;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .projects-header h1 {
+    font-size: 28px;
+  }
+
+  .section-btn {
+    margin-bottom: 0;
+  }
+
+  .map-sheet {
+    width: min(420px, 100%);
+    border-radius: 12px 0 0 12px;
+  }
+
+  .sheet-inner {
+    gap: 16px;
+    padding: 18px;
+  }
+
+  .sheet-media img {
+    min-height: 0;
+    max-height: none;
+  }
+
+  .sheet-content h2 {
+    margin-right: 42px;
+    font-size: 22px;
+  }
+
+  .sheet-actions {
+    flex-direction: column;
+  }
+
+  .sheet-actions .btn {
+    text-align: center;
   }
 
   .footer-right {
